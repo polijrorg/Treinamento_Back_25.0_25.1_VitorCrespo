@@ -22,19 +22,21 @@
  * ================================================================
  */
 
-class Hero {
+class user {
   id: string; // Identificador único do herói
   name: string; // Nome do herói (ex: Batman)
-  power: string; // Poder ou habilidade principal (ex: Inteligência)
+  email: string; // Poder ou habilidade principal (ex: Inteligência)
+  passw: string;
 
   /**
    * Construtor para criar um novo herói com base nos dados fornecidos
    */
-  constructor(id: string, name: string, power: string) {
+  constructor(id: string, name: string, email: string, passw: string) {
     this.id = id;
     this.name = name;
-    this.power = power;
+    this.email = email;
+    this.passw = passw;
   }
 }
 
-export default Hero;
+export default user;

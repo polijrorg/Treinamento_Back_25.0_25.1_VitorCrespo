@@ -24,40 +24,42 @@
  * ================================================================
  */
 
-import Hero from '../models/Hero';
+import user from '../models/User';
 
-interface ICreateHeroDTO {
+interface ICreateUserDTO {
   id: string;
   name: string;
-  power: string;
+  passw: string;
+  email: string;
 }
 
-interface IUpdateHeroDTO {
+interface IUpdateUserDTO {
   id: string;
   data: {
     name: string;
-    power: string;
+    email: string;
+    passw: string;
   };
 }
 
-class HeroRepository {
-  private heroes: Hero[];
+class UserRepository {
+  private users: user[];
 
   constructor() {
     // Nosso "banco de dados" será um array de heróis em memória
-    this.heroes = [];
+    this.users = [];
   }
 
   // ========================================
   // CREATE → Cria e armazena um novo herói
   // ========================================
-  public create(data: ICreateHeroDTO): Hero {
-    const { id, name, power } = data;
+  public create(data: ICreateUserDTO): user {
+    const { id, name, email, passw } = data;
 
-    const hero = new Hero(id, name, power);
-    this.heroes.push(hero); // salva no array
+    const newUser = new user(id, name, email, passw); // cria uma nova instância do herói
+    this.users.push(newUser); // salva no array
 
-    return hero;
+    return newUser;
   }
 
   // ========================================
@@ -65,40 +67,40 @@ class HeroRepository {
   // ========================================
 
   // Retorna todos os heróis cadastrados
-  public getAll(): Hero[] {
-    return this.heroes;
+  public getAll(): user[] {
+    return this.users;
   }
 
   // Busca um herói específico pelo ID
-  public getById(id: string): Hero | undefined {
-    return this.heroes.find(hero => hero.id === id);
+  public getById(id: string): user | undefined {
+    return this.users.find(user => user.id === id);
   }
 
   // Retorna o índice (posição) do herói no array
   public findIndexById(id: string): number {
-    return this.heroes.findIndex(hero => hero.id === id);
+    return this.users.findIndex(hero => hero.id === id);
   }
 
   // ========================================
   // UPDATE → Atualiza um herói existente
   // ========================================
-  public update(data: IUpdateHeroDTO): Hero {
+  public update(data: IUpdateUserDTO): user {
     const index = this.findIndexById(data.id);
 
-    this.heroes[index] = {
-      ...this.heroes[index], // mantém dados antigos
+    this.users[index] = {
+      ...this.users[index], // mantém dados antigos
       ...data.data, // sobrescreve com dados novos
     };
 
-    return this.heroes[index];
+    return this.users[index];
   }
 
   // ========================================
   // DELETE → Remove um herói do array
   // ========================================
   public delete(index: number): void {
-    this.heroes.splice(index, 1); // remove 1 elemento na posição index
+    this.users.splice(index, 1); // remove 1 elemento na posição index
   }
 }
 
-export default HeroRepository;
+export default UserRepository;

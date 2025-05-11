@@ -21,15 +21,15 @@
 
 import { randomUUID } from 'crypto';
 
-import Hero from '../models/Hero';
-import HeroRepository from '../repositories/HeroRepository';
+import user from '../models/User';
+import UserRepository from '../repositories/UserRepository';
 
-class HeroService {
-  private repository: HeroRepository;
+class UserService {
+  private repository: UserRepository;
 
   constructor() {
     // Cria uma instância do repositório que gerencia os heróis
-    this.repository = new HeroRepository();
+    this.repository = new UserRepository();
   }
 
   // ========================================
@@ -41,16 +41,17 @@ class HeroService {
    * e em seguida o método 'create' do repositório é chamado
    * para armazenar o herói na fonte de dados (array em memória).
    */
-  public create(name: string, power: string): Hero {
+  public create(name: string, email: string, passw: string): user {
     const id = randomUUID(); // Gera um ID único
 
-    const hero = this.repository.create({
+    const user = this.repository.create({
       id,
       name,
-      power,
+      email,
+      passw,
     });
 
-    return hero;
+    return user;
   }
 
   // ========================================
@@ -58,12 +59,12 @@ class HeroService {
   // ========================================
 
   // Lista todos os heróis existentes
-  public listAll(): Hero[] {
+  public listAll(): user[] {
     return this.repository.getAll();
   }
 
   // Busca um herói específico pelo ID
-  public findById(id: string): Hero | undefined {
+  public findById(id: string): user | undefined {
     return this.repository.getById(id);
   }
 
@@ -77,14 +78,14 @@ class HeroService {
    * para sobrescrever os dados no array.
    * Caso contrário, retorna null.
    */
-  public update(id: string, name: string, power: string): Hero | null {
-    const existingHero = this.repository.getById(id);
+  public update(id: string, name: string, email: string, passw: string): user | null {
+    const existingUser = this.repository.getById(id);
 
-    if (!existingHero) return null;
+    if (!existingUser) return null;
 
     return this.repository.update({
       id,
-      data: { name, power },
+      data: { name, email, passw },
     });
   }
 
@@ -107,4 +108,4 @@ class HeroService {
   }
 }
 
-export default new HeroService();
+export default new UserService();
